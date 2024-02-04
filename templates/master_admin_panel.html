@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Listesi</title>
+</head>
+<body>
+    <h1>Admin Listesi</h1>
+    
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Kullanıcı Adı</th>
+            <th>Şifre</th>
+            <th>İşlem</th>
+        </tr>
+        {% for admin in admin_list %}
+        <tr>
+            <td>{{ admin[0] }}</td>
+            <td>{{ admin[1] }}</td>
+            <td>{{ admin[2] }}</td>
+            <td>
+                <form method="POST" action="/">
+                    <input type="hidden" name="admin_id" value="{{ admin[0] }}">
+                    <input type="hidden" name="action" value="delete">
+                    <button type="submit" onclick="return confirm('Bu admini silmek istediğinize emin misiniz?')">Sil</button>
+                </form>
+                <a href="/admin_duzenle/{{ admin[0] }}">Düzenle</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+    <h2>Yeni Admin Ekle</h2>
+    <form method="POST" action="/admin_ekle">
+        <input type="text" name="yeni_kullanici_ad" placeholder="Yeni Kullanıcı Adı">
+        <input type="password" name="yeni_sifre" placeholder="Yeni Şifre">
+        <button type="submit">Ekle</button>
+    </form>
+</body>
+</html>

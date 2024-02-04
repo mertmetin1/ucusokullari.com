@@ -1,0 +1,97 @@
+{% extends 'admin_layout.html' %}
+
+{% block content %}
+<!-- ogrenci_ekle.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Yeni Öğrenci Ekle</title>
+    <style>
+        .card {
+            max-width: 400px;
+            margin: 50px auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        .card-title {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: #0069d9;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card mt-5">
+            <div class="card-header">
+                <h1>Yeni Öğrenci Ekle</h1>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div class="mb-3">
+                        <label for="ogrenci_isim" class="form-label">İsim:</label>
+                        <input type="text" id="ogrenci_isim" name="ogrenci_isim" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="ogrenci_soyisim" class="form-label">Soyisim:</label>
+                        <input type="text" id="ogrenci_soyisim" name="ogrenci_soyisim" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="ogrenci_telefon" class="form-label">Telefon:</label>
+                        <input type="text" id="ogrenci_telefon" name="ogrenci_telefon" class="form-control"  pattern="0[0-9]{10}" required>
+                        <small>Örnek: 05551115555</small><br><br>
+                    </div>
+                    <div class="mb-3">
+                        <label for="ogrenci_email" class="form-label">E-posta:</label>
+                        <input type="email" id="ogrenci_email" name="ogrenci_email" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="submit" value="Kaydet" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'admin_layout.html' %}
+
+{% block title %}Kullanıcılar{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="my-3">Kullanıcılar</h2>
+    <a href="{{ url_for('kullanici_ekle') }}" class="btn btn-primary mb-3">Kullanıcı Ekle</a>
+    <table class="table table-striped">
+        <thead class="thead-light">
+            <tr>
+                <th>Kullanıcı Adı</th>
+                <th>Şifre</th>
+		<th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for kullanici in kullanici_listesi %}
+                <tr>
+                    <td>{{ kullanici.kurs_admin_username }}</td>
+                    <td>{{ kullanici.kurs_admin_password }}</td>
+                    <td>
+                        <a href="{{ url_for('kullanici_duzenle', username=kullanici.kurs_admin_username) }}" class="btn btn-warning">Düzenle</a>
+                        <a href="{{ url_for('kullanici_sil', username=kullanici.kurs_admin_username) }}" class="btn btn-danger"
+                        onclick="return confirm('Bu kullnıcıyı silmek istediğinize emin misiniz?')">Sil</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

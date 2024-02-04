@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rezervasyon</title>
+    
+</head>
+<body>
+    <h1>Rezervasyon</h1>
+    <form action="" method="POST">
+        <label for="ogrenci_isim">Öğrenci İsim:</label>
+        <input type="text" id="ogrenci_isim" name="ogrenci_isim" required><br><br>
+        <label for="ogrenci_soyisim">Öğrenci Soyisim:</label>
+        <input type="text" id="ogrenci_soyisim" name="ogrenci_soyisim" required><br><br>
+        <label for="ogrenci_telefon">Öğrenci Telefon:</label>
+        <input type="text" id="ogrenci_telefon" name="ogrenci_telefon" required><br><br>
+        <label for="ogrenci_email">Öğrenci E-mail:</label>
+        <input type="email" id="ogrenci_email" name="ogrenci_email" required><br><br>
+        <input type="submit" value="Rezervasyon Yap">
+    </form>
+</body>
+</html>
+{% endblock %}

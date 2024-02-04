@@ -1,0 +1,37 @@
+{% extends 'admin_layout.html' %}
+
+{% block title %}Admin Panel{% endblock %}
+
+{% block content %}
+<div class="table-responsive">
+    <h2>Dersler</h2>
+    <a href="{{ url_for('ders_ekle') }}" class="btn btn-primary">Ders Ekle</a>
+
+    <br><br>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-light">
+            <tr>
+                <th>Ders Adı</th>
+                <th>Açıklama</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        {% for ders in dersler %}
+        <tr>
+            <td>{{ ders.kurs_adi }}</td>
+            <td>{{ ders.kurs_aciklama }}</td>
+            <td>
+                <div class="btn-group">
+                    <a href="{{ url_for('ders_duzenle', kurs_id=ders.kurs_id) }}"
+                        class="btn btn-sm btn-warning">Düzenle</a>
+                    <a href="{{ url_for('ders_sil', kurs_id=ders.kurs_id) }}" class="btn btn-sm btn-danger"
+                        onclick="return confirm('Bu dersi silmek istediğinize emin misiniz?')">Sil</a>
+                </div>
+
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

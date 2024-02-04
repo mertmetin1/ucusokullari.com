@@ -1,0 +1,18 @@
+{% extends 'admin_layout.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-3">Ders Düzenle</h2>
+    <form method="POST" action="{{ url_for('ders_duzenle', kurs_id=ders.kurs_id) }}">
+        <div class="mb-3">
+            <label for="kurs_adi" class="form-label">Ders Adı:</label>
+            <input type="text" class="form-control" id="kurs_adi" name="kurs_adi" value="{{ ders.kurs_adi }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="kurs_aciklama" class="form-label">Açıklama:</label>
+            <textarea class="form-control" id="kurs_aciklama" name="kurs_aciklama" rows="3" required>{{ ders.kurs_aciklama }}</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+    </form>
+</div>
+{% endblock %}

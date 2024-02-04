@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rezervasyon Ekle</title>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center mt-5">Rezervasyon Ekle</h2>
+        <form action="/rezervasyon_ekle" method="POST">
+            <div class="form-group">
+                <label for="ogrenci_isim">Öğrenci İsim</label>
+                <input type="text" class="form-control" id="ogrenci_isim" name="ogrenci_isim" required>
+            </div>
+            <div class="form-group">
+                <label for="ogrenci_soyisim">Öğrenci Soyisim</label>
+                <input type="text" class="form-control" id="ogrenci_soyisim" name="ogrenci_soyisim" required>
+            </div>
+            <div class="form-group">
+                <label for="kurs_adi">Kurs Adı</label>
+                <input type="text" class="form-control" id="kurs_adi" name="kurs_adi" required>
+            </div>
+            <div class="form-group">
+                <label for="rezervasyon_tarih">Rezervasyon Tarihi</label>
+                <input type="date" class="form-control" id="rezervasyon_tarih" name="rezervasyon_tarih" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Rezervasyon Ekle</button>
+        </form>
+    </div>
+</body>
+</html>

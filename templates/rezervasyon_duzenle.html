@@ -1,0 +1,88 @@
+{% extends 'admin_layout.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .card {
+                max-width: 400px;
+                margin: 50px auto;
+                border-radius: 5px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+        
+            .card-header {
+                background-color: #f8f9fa;
+                padding: 20px;
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+            }
+        
+            .card-title {
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+        
+            .card-body {
+                padding: 20px;
+            }
+        
+            .form-group {
+                margin-bottom: 20px;
+            }
+        
+            .form-control {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-sizing: border-box;
+            }
+        
+            .btn-primary {
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                padding: 10px 20px;
+                cursor: pointer;
+            }
+        
+            .btn-primary:hover {
+                background-color: #0069d9;
+            }
+        </style>
+    </head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header text-center">
+                <h2>Rezervasyon Düzenle</h2>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="/rezervasyon_duzenle/{{ rezervasyon.rezervasyon_id }}">
+                    <div class="form-group">
+                        <label for="ogrenci_isim">Öğrenci İsim</label>
+                        <input type="text" class="form-control" id="ogrenci_isim" name="ogrenci_isim" value="{{ rezervasyon.ogrenci_isim }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ogrenci_soyisim">Öğrenci Soyisim</label>
+                        <input type="text" class="form-control" id="ogrenci_soyisim" name="ogrenci_soyisim" value="{{ rezervasyon.ogrenci_soyisim }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="kurs_adi">Kurs Adı</label>
+                        <input type="text" class="form-control" id="kurs_adi" name="kurs_adi" value="{{ rezervasyon.kurs_adi }}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="rezervasyon_tarih">Rezervasyon Tarihi</label>
+                        <input type="date" class="form-control" id="rezervasyon_tarih" name="rezervasyon_tarih" value="{{ rezervasyon.rezervasyon_tarih }}" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Güncelle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}

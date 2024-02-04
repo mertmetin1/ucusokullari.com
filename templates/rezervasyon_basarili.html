@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-3">Rezervasyon Başarılı!</h2>
+    <p>Sayın {{ ogrenci_isim }} {{ ogrenci_soyisim }},</p>
+    <p>Rezervasyonunuz başarıyla tamamlandı. Aşağıdaki detaylarla birlikte rezervasyonunuz alındı:</p>
+    <div class="card">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Öğrenci Adı:</strong> {{ ogrenci_isim }} {{ ogrenci_soyisim }}</li>
+            <li class="list-group-item"><strong>Kurs Adı:</strong> {{ kurs_adi }}</li>
+            <li class="list-group-item"><strong>Açıklama:</strong> {{ aciklama }}</li>
+            <li class="list-group-item"><strong>Rezervasyon Tarihi:</strong> <span id="rezervasyon_tarih"></span></li>
+        </ul>
+    </div>
+    <p class="mt-3">Detaylı bilgiler için kurs yöneticisiyle iletişime geçebilirsiniz.</p>
+    <p>İyi günler dileriz!</p>
+
+    <script>
+        // Rezervasyon tarihini JavaScript ile al ve yerleştir
+        document.getElementById("rezervasyon_tarih").innerText = new Date().toLocaleString();
+    </script>
+</div>
+{% endblock %}

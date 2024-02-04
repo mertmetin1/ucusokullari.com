@@ -1,0 +1,30 @@
+{% extends 'admin_layout.html' %}
+
+{% block title %}Dekontlar{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="my-3">Dekontlar</h2>
+    <table class="table table-striped">
+        <thead class="thead-light">
+            <tr>
+                <th>Dekont Adı</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for dekont in dekontlar %}
+                <tr>
+                    <td>{{ dekont }}</td>
+                    <td>
+                        <a href="{{ url_for('dekont_goster', filename=dekont) }}" class="btn btn-primary">Görüntüle</a>
+                        <a href="{{ url_for('dekont_indir', filename=dekont) }}" class="btn btn-success">İndir</a>
+                        <a href="{{ url_for('dekont_sil', filename=dekont) }}" class="btn btn-danger"
+                        onclick="return confirm('Bu dekontu silmek istediğinize emin misiniz?')">Sil</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

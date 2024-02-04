@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Profil Sayfası</title>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <!-- Oturumu kapatma butonu -->
+        <div class="d-flex justify-content-end">
+            <a class="btn btn-warning btn-sm" href="{{ url_for('oturumu_kapat') }}">Oturumu Kapat</a>
+        </div>
+
+        <!-- Profil Başlığı -->
+        <h1 class="mt-3 mb-5">Profil</h1>
+
+        <!-- Rezervasyonlar Tablosu -->
+        <h3 class="mb-4">Rezervasyonlar</h3>
+        <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Kurs Adı</th>
+                    <th>Kurs Veren Okul</th>
+                    <th>Rezervasyon Tarihi</th>
+                    <th>İşlem</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rezervasyon in rezervasyonlar %}
+                <tr>
+                    <td>{{ rezervasyon['kurs_adi'] }}</td>
+                    <td>{{ rezervasyon['kurs_veren_okul'] }}</td>
+                    <td>{{ rezervasyon['rezervasyon_tarih'] }}</td>
+                    <td>
+                        <form
+                            action="{{ url_for('ogrenci_rezervasyon_sil', rezervasyon_id=rezervasyon['rezervasyon_id']) }}"
+                            method="POST">
+                            <button class="btn btn-danger btn-sm" type="submit">Sil</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+</html>
+
+{% endblock %}

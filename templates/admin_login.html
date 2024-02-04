@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="card">
+
+        <div class="card-header">
+            <h2 class="card-title">Admin Girişi</h2>
+        </div>
+        <div class="card-body">
+
+            <form method="POST">
+                <div class="form-group">
+                    <label for="admin_username">Kullanıcı Adı:</label>
+                    <input type="text" class="form-control" id="admin_username" name="admin_username" required>
+                </div>
+                <div class="form-group">
+                    <label for="admin_password">Şifre:</label>
+                    <input type="password" class="form-control" id="admin_password" name="admin_password" required>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Giriş Yap</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    .card {
+        max-width: 400px;
+        margin: 50px auto;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+
+    .card-title {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+
+    .btn-primary:hover {
+        background-color: #0069d9;
+    }
+</style>
+{% endblock %}

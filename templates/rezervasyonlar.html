@@ -1,0 +1,130 @@
+{% extends 'admin_layout.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Rezervasyonlar</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2 class="text-center mt-5">Rezervasyonlar</h2>
+
+        <div class="mb-3">
+            <label for="search-input">İsme Göre Arama:</label>
+            <input type="text" id="search-input" class="form-control">
+        </div>
+
+        <h3>kontenjanı dolmuş Kurslar</h3>
+        <table class="table mt-4" id="fully-booked-table" data-page-size="5">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Öğrenci İsim</th>
+                    <th scope="col">Öğrenci Soyisim</th>
+                    <th scope="col">Kurs Adı</th>
+                    <th scope="col">Rezervasyon Tarihi</th>
+                    <th scope="col">İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rezervasyon in fully_booked_kurslar %}
+                {% if rezervasyon.kurs_kontenjan == 0%}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+
+                    <td>{{ rezervasyon.ogrenci_isim }}</td>
+                    <td>{{ rezervasyon.ogrenci_soyisim }}</td>
+                    <td>{{ rezervasyon.kurs_adi }}</td>
+                    <td>{{ rezervasyon.rezervasyon_tarih }}</td>
+                    <td>
+                        <a href="/rezervasyon_duzenle/{{ rezervasyon.rezervasyon_id }}"
+                            class="btn btn-primary btn-sm">Düzenle</a>
+                        <a href="/rezervasyon_sil/{{ rezervasyon.rezervasyon_id }}" class="btn btn-danger btn-sm"
+                            onclick="return confirm('Bu rezervasyonu silmek istediğinize emin misiniz?')">Sil</a>
+                    </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h3>Açık kontenjanlı Kurslar</h3>
+        <table class="table mt-4" id="available-table" data-page-size="10">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Öğrenci İsim</th>
+                    <th scope="col">Öğrenci Soyisim</th>
+                    <th scope="col">Kurs Adı</th>
+                    <th scope="col">Rezervasyon Tarihi</th>
+                    <th scope="col">Kalan Kontenjan</th>
+                    <th scope="col">İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rezervasyon in available_kurslar %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td>{{ rezervasyon.ogrenci_isim }}</td>
+                    <td>{{ rezervasyon.ogrenci_soyisim }}</td>
+                    <td>{{ rezervasyon.kurs_adi }}</td>
+                    <td>{{ rezervasyon.rezervasyon_tarih }}</td>
+                    <td>{{ rezervasyon.kurs_kontenjan }}</td>
+                    <td>
+
+                        <a href="/rezervasyon_duzenle/{{ rezervasyon.rezervasyon_id }}"
+                            class="btn btn-primary btn-sm">Düzenle</a>
+                        <a href="/rezervasyon_sil/{{ rezervasyon.rezervasyon_id }}" class="btn btn-danger btn-sm"
+                            onclick="return confirm('Bu rezervasyonu silmek istediğinize emin misiniz?')">Sil</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('search-input');
+        const fullyBookedTable = document.getElementById('fully-booked-table');
+        const availableTable = document.getElementById('available-table');
+        const fullyBookedRows = fullyBookedTable.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+        const availableRows = availableTable.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+
+        searchInput.addEventListener('input', function () {
+            filterRows();
+        });
+
+        function filterRows() {
+            const searchQuery = searchInput.value.trim().toLowerCase();
+
+            for (let i = 0; i < fullyBookedRows.length; i++) {
+                const row = fullyBookedRows[i];
+                const rowData = row.textContent.trim().toLowerCase();
+
+                if (rowData.includes(searchQuery)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            }
+
+            for (let i = 0; i < availableRows.length; i++) {
+                const row = availableRows[i];
+                const rowData = row.textContent.trim().toLowerCase();
+
+                if (rowData.includes(searchQuery)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
+{% endblock %}

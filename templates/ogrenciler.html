@@ -1,0 +1,74 @@
+{% extends 'admin_layout.html' %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Öğrenciler</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">Öğrenciler</h1>
+        <div class="mb-3">
+            <a href="/ogrenci_ekle" class="btn btn-primary">Yeni Öğrenci Ekle</a>
+        </div>
+        <input type="text" id="filterInput" class="form-control mb-3" placeholder="Arama yapın...">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">İsim</th>
+                    <th scope="col">Soyisim</th>
+                    <th scope="col">Telefon No</th>
+                    <th scope="col">E-mail</th>
+                    <th scope="col">İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ogrenci in ogrenciler %}
+                <tr>
+                    <th scope="row">{{ ogrenci.ogrenci_id }}</th>
+                    <td>{{ ogrenci.ogrenci_isim }}</td>
+                    <td>{{ ogrenci.ogrenci_soyisim }}</td>
+                    <td>{{ ogrenci.ogrenci_telefon_no }}</td>
+                    <td>{{ ogrenci.ogrenci_email }}</td>
+                    <td>
+                        <a href="/ogrenci_duzenle/{{ ogrenci.ogrenci_id }}" class="btn btn-warning">Düzenle</a>
+                        <a href="/ogrenci_sil/{{ ogrenci.ogrenci_id }}" class="btn btn-danger">Sil</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Filtreleme işlemini gerçekleştiren JavaScript kodu
+        document.getElementById('filterInput').addEventListener('keyup', function () {
+            const filterValue = this.value.toLowerCase();
+            const rows = document.querySelectorAll('tbody tr'); // Tablo satırlarını seçiyoruz
+
+            rows.forEach(row => {
+                const columns = row.querySelectorAll('td');
+                let matchFound = false;
+
+                columns.forEach(column => {
+                    const columnValue = column.textContent.toLowerCase();
+                    if (columnValue.includes(filterValue)) {
+                        matchFound = true;
+                    }
+                });
+
+                if (matchFound) {
+                    row.style.display = ''; // Eğer eşleşme varsa satırı görünür yap
+                } else {
+                    row.style.display = 'none'; // Eğer eşleşme yoksa satırı gizle
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+{% endblock %}

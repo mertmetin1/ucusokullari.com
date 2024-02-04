@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kurs İlanı Sil</title>
+</head>
+<body>
+    <h1>Kurs İlanı Sil</h1>
+    <p>Kurs ilanını silmek istediğinizden emin misiniz?</p>
+    <form method="POST" action="/kurs_sil/{{ kurs.kurs_ilan_id }}">
+        <input type="submit" value="Sil">
+    </form>
+</body>
+</html>
+{% endblock %}

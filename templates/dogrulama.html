@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Doğrulama</title>
+</head>
+<body>
+    
+    <h1>Doğrulama</h1>
+    <h3>Lütfen Email Adresinize yolladığımız doğrulama kodunu girin.</h3>
+    <form action="/dogrulama" method="post">
+        
+        <input type="hidden" name="ogrenci_telefon" value="{{ ogrenci_telefon }}">
+        <input type="hidden" name="ogrenci_soyisim" value="{{ ogrenci_soyisim }}">
+        <input type="hidden" name="ogrenci_isim" value="{{ ogrenci_isim }}">
+        <input type="hidden" name="randomsayi" value="{{ randomsayi }}">
+        <input type="hidden" name="ogrenci_email" value="{{ ogrenci_email }}">
+        <label for="verification_code">Doğrulama Kodu:</label>
+        <input type="text" id="verification_code" name="verification_code" required><br><br>
+        
+        <input type="submit" value="Doğrula">
+    </form>
+</body>
+</html>
+{% endblock %}

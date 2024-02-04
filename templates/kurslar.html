@@ -1,0 +1,233 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Eğitimler</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .framed-card {
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: transform 0.2s ease-in-out;
+            background-color: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .framed-card .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .framed-card .card-header {
+            background-color: #f2f2f2;
+            border-bottom: none;
+            text-align: center;
+            font-weight: bold;
+            padding: 0.75rem 1rem;
+        }
+
+        .framed-card .card-body {
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .framed-card .kurs-adi {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .framed-card .kurs-kontenjan {
+            font-size: 0.875rem;
+            font-weight: bold;
+        }
+
+        .framed-card .kontenjan-label {
+            font-size: 0.75rem;
+            color: #6c757d;
+        }
+
+        /* Remove underlines from links */
+        .framed-card .card-link {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Create a responsive card layout */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .col-md-4 {
+            flex: 0 0 calc(33.33% - 20px);
+            max-width: 400px;
+        }
+    </style>
+</head>
+
+<body>
+    <h4>Okula Göre Filtrele...</h4>
+    <div class="okul-listesi">
+        <button class="btn btn-sm btn-primary kurs-filtre" data-kurs="">Tümü</button>
+        {% set unique_okullar = [] %}
+        {% for kurs in kurslar_ilan %}
+            {% if kurs.Kurs_veren_okul not in unique_okullar %}
+                <button class="btn btn-sm btn-warning okul-btn" data-okul="{{ kurs.Kurs_veren_okul }}">
+                    <strong> Okul:</strong> {{ kurs.Kurs_veren_okul }}
+                </button>
+                {% set _ = unique_okullar.append(kurs.Kurs_veren_okul) %}
+            {% endif %}
+        {% endfor %}
+    </div>
+<br>
+<h4>Kursa Göre Filtrele...</h4>
+        <!-- Kurs isimlerine göre filtreleme butonları -->
+        <div class="kurs-filtreleri">
+            <button class="btn btn-sm btn-primary kurs-filtre" data-kurs="">Tümü</button>
+            {% set unique_kurslar = [] %}
+            {% for kurs in kurslar_ilan %}
+                {% if kurs.kurs_adi not in unique_kurslar %}
+                    <button class="btn btn-sm btn-secondary kurs-filtre" data-kurs="{{ kurs.kurs_adi }}">
+                        {{ kurs.kurs_adi }}
+                    </button>
+                    {% set _ = unique_kurslar.append(kurs.kurs_adi) %}
+                {% endif %}
+            {% endfor %}
+        </div>
+
+    <div class="container my-5">
+        <h1 class="mb-4 text-center">Eğitimler</h1>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">
+                <i class="fa fa-search"></i>
+            </span>
+            <input type="text" class="form-control" id="searchInput" placeholder="Eğitim adıyla ara..."
+                aria-label="Eğitim adıyla ara...">
+        </div>
+
+
+
+        <div class="row">
+            {% for kurs in kurslar_ilan %}
+            <div class="col-md-4">
+                <div class="framed-card" data-okul="{{ kurs.Kurs_veren_okul }}">
+                    <a href="{% if kurs.kurs_kontenjan > 0 %}/odeme/{{ kurs.kurs_ilan_id }}{% else %}#{% endif %}"
+                        class="card-link {% if kurs.kurs_kontenjan == 0 %}disabled-link{% endif %}"
+                        {% if kurs.kurs_kontenjan == 0 %}onclick="alert('Kontenjan dolu!'); return false;"{% endif %}>
+                        <div class="card h-100">
+                            <div class="card-header">
+                                {{ kurs.kurs_adi }}
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">{{ kurs.kurs_aciklama|truncate(100, end='...') }}</p>
+                                <p class="card-text"><strong>Okul:</strong> {{ kurs.Kurs_veren_okul }}</p>
+                                <!-- <p class="card-text"><strong>Kurs Düzenleyen:</strong> {{ kurs.kurs_admin_username }}</p>-->
+                                
+                            </div>
+                            <div class="card-footer">
+                                <span class="kontenjan-label">Kontenjan</span>
+                                {% if kurs.kurs_kontenjan > 0 %}
+                                    {% if kurs.kurs_kontenjan <= 3 %}
+                                        <span>Son {{ kurs.kurs_kontenjan }} kontenjan kaldı!</span>
+                                    {% elif kurs.kurs_kontenjan < 5 %}
+                                        <span>Son 5 kontenjan kaldı!</span>
+                                    {% else %}
+                                        {{ kurs.kurs_kontenjan }}
+                                    {% endif %}
+                                {% else %}
+                                    <span>Dolu</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+
+<script>
+    // Okul butonlarına tıklama eventi ekleme
+    var okulButtons = document.getElementsByClassName('okul-btn');
+    for (var i = 0; i < okulButtons.length; i++) {
+        okulButtons[i].addEventListener('click', function() {
+            var okulAdi = this.getAttribute('data-okul');
+            filterKurslarByOkul(okulAdi);
+        });
+    }
+
+    // JavaScript function for filtering kurslar by okul
+    function filterKurslarByOkul(okulAdi) {
+        var cards = document.getElementsByClassName('framed-card');
+        for (var i = 0; i < cards.length; i++) {
+            var cardOkul = cards[i].getAttribute('data-okul');
+            if (okulAdi === cardOkul) {
+                cards[i].style.display = ''; // Show the card
+            } else {
+                cards[i].style.display = 'none'; // Hide the card
+            }
+        }
+    }
+
+    // JavaScript function for filtering kurslar by kurs adı
+    function filterKurslarByAd(ad) {
+        var cards = document.getElementsByClassName('framed-card');
+        for (var i = 0; i < cards.length; i++) {
+            var cardAd = cards[i].getElementsByClassName('card-header')[0].textContent || cards[i].getElementsByClassName('card-header')[0].innerText;
+            if (ad === '' || cardAd.toUpperCase().indexOf(ad.toUpperCase()) > -1) {
+                cards[i].style.display = ''; // Show the card
+            } else {
+                cards[i].style.display = 'none'; // Hide the card
+            }
+        }
+    }
+
+    // Add event listeners for the kurs filter buttons
+    var kursFiltreleri = document.getElementsByClassName('kurs-filtre');
+    for (var i = 0; i < kursFiltreleri.length; i++) {
+        kursFiltreleri[i].addEventListener('click', function() {
+            var kursAdi = this.getAttribute('data-kurs');
+            filterKurslarByAd(kursAdi);
+        });
+    }
+
+    // JavaScript function for filtering kurslar
+    function filterKurslar() {
+        var input, filter, cards, cardHeaders, i, txtValue;
+        input = document.getElementById('searchInput');
+        filter = input.value.toUpperCase();
+        cards = document.getElementsByClassName('framed-card');
+
+        for (i = 0; i < cards.length; i++) {
+            cardHeaders = cards[i].getElementsByClassName('card-header');
+            txtValue = cardHeaders[0].textContent || cardHeaders[0].innerText;
+
+            // Compare the kurs_adi with the search filter
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                cards[i].style.display = ''; // Show the card
+            } else {
+                cards[i].style.display = 'none'; // Hide the card
+            }
+        }
+    }
+
+    // Add event listener for the input field
+    document.getElementById('searchInput').addEventListener('input', filterKurslar);
+</script>
+
+</html>
+{% endblock %}

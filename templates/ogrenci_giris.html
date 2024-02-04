@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<head>
+
+    <title>Öğrenci Girişi</title>
+
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <b>Öğrenci Girişi</b>
+                    </div>
+                    <div class="card-body">
+                        <form action="/ogrenci_giris" method="post">
+                            <div class="mb-3">
+                                <label for="ogrenci_soyisim" class="form-label">Soyisim</label>
+                                <input type="text" class="form-control" id="ogrenci_soyisim" name="ogrenci_soyisim"
+                                    required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="ogrenci_telefon" class="form-label">Telefon Numarası</label>
+                                <input type="text" class="form-control" id="ogrenci_telefon" name="ogrenci_telefon"
+                                    required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Giriş Yap</button>
+                        </form>
+                        <div class="mt-3 text-center">
+                            <p>Hesabınız mı yok? <a href="/ogrenci_kayit">Kaydolun!</a></p>
+                        </div>
+                        <div class="mt-3 text-center">
+                            <a href="/kullanici_giris">İşletme hesabınızla Giriş Yapın!</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+{% endblock %}

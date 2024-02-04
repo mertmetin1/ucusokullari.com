@@ -1,0 +1,271 @@
+{% extends 'admin_layout.html' %}
+
+{% block content %}
+<h1>Admin Panel</h1>
+<h2>Filtreleme</h2>
+<input type="text" id="filterInput" placeholder="Arama yapın...">
+<div class="table-responsive">
+    <h2>Eğitimler</h2>
+    <a href="{{ url_for('ders_ekle') }}" class="btn btn-primary">Ders Ekle</a>
+
+    <br><br>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-light">
+            <tr>
+                <th>Ders Adı</th>
+                <th>Açıklama</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        {% for ders in dersler %}
+        <tr>
+            <td>{{ ders.kurs_adi }}</td>
+            <td>{{ ders.kurs_aciklama }}</td>
+            <td>
+                <div class="btn-group">
+                    <a href="{{ url_for('ders_duzenle', kurs_id=ders.kurs_id) }}"
+                        class="btn btn-sm btn-warning">Düzenle</a>
+                    <a href="{{ url_for('ders_sil', kurs_id=ders.kurs_id) }}" class="btn btn-sm btn-danger">Sil</a>
+                </div>
+
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+<h2>İlanlar</h2>
+<a href="{{ url_for('kurs_ekle') }}" class="btn btn-primary">İlan Ekle</a>
+<br><br>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead class="thead-light">
+            <tr>
+                <th>Kurs İlan ID</th>
+                <th>Kurs Adı</th>
+                <th>Kurs Veren Okul</th>
+                <th>Kurs Admin Username</th>
+                <th>Kurs Açıklama</th>
+                <th>Kurs Tarih</th>
+                <th>Kurs Kontenjan</th>
+                <th>Kurs Fiyat</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ilan in ilanlar %}
+            <tr>
+                <td>{{ ilan.kurs_ilan_id }}</td>
+                <td>{{ ilan.kurs_adi }}</td>
+                <td>{{ ilan.Kurs_veren_okul }}</td>
+                <td>{{ ilan.kurs_admin_username }}</td>
+                <td>{{ ilan.kurs_aciklama }}</td>
+                <td>{{ ilan.kurs_tarih }}</td>
+                <td>{{ ilan.kurs_kontenjan }}</td>
+                <td>{{ ilan.kurs_fiyat }}</td>
+                <td>
+
+                    <div class="btn-group">
+                        <a href="{{ url_for('kurs_duzenle', kurs_ilan_id=ilan.kurs_ilan_id) }}"
+                            class="btn btn-sm btn-warning">Düzenle</a>
+                        <a href="{{ url_for('kurs_sil', kurs_ilan_id=ilan.kurs_ilan_id) }}"
+                            class="btn btn-sm btn-danger">Sil</a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+
+
+<br><br>
+<div class="table-responsive">
+    <h2>Rezervasyonlar</h2>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-light">
+            <tr>
+                <th>Rezervasyon ID</th>
+                <th>Rezervasyon Tarihi</th>
+                <th>Öğrenci İsim</th>
+                <th>Öğrenci Soyisim</th>
+                <th>Kurs adi</th>
+                <th>Kurs İlan ID</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rezervasyon in rezervasyonlar %}
+            <tr>
+                <td>{{ rezervasyon.rezervasyon_id }}</td>
+                <td>{{ rezervasyon.rezervasyon_tarih }}</td>
+                <td>{{ rezervasyon.ogrenci_isim }}</td>
+                <td>{{ rezervasyon.ogrenci_soyisim }}</td>
+                
+                {% for ilan in ilanlar %}
+                {% if ilan.kurs_ilan_id==rezervasyon.kurs_ilan_id %}
+
+                <td>{{ ilan.kurs_adi }}</td>
+                {% endif %}
+                {% endfor %}
+                <td>{{ rezervasyon.kurs_ilan_id }}</td>
+                <td>
+                    <a href="{{ url_for('rezervasyon_duzenle', rezervasyon_id=rezervasyon.rezervasyon_id) }}"
+                        class="btn btn-sm btn-warning">Düzenle</a>
+                    <a href="{{ url_for('rezervasyon_sil', rezervasyon_id=rezervasyon.rezervasyon_id) }}"
+                        class="btn btn-sm btn-danger">Sil</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<br><br>
+<div class="table-responsive">
+    <h2>Kullanıcılar</h2>
+    <span><p>*kullanıcıyı kaydederken ilgili kişinin e-mail Adresi kullanılmalıdır aksi taktirde bilgilendirilme mailleri gönderilemez</p>
+        <strong>Örnek:erdemlimertmetin@gmail.com</strong><br>
+    </span>
+        
+    <a href="{{ url_for('kullanici_ekle') }}" class="btn btn-primary">Kullanıcı Ekle</a>
+    <br><br>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-light">
+            <tr>
+                <th>Kullanıcı Adı</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for kullanici in kullanici_listesi %}
+            <tr>
+                <td>{{ kullanici.kurs_admin_username }}</td>
+                <td>
+                    <a href="{{ url_for('kullanici_duzenle', username=kullanici.kurs_admin_username) }}"
+                        class="btn btn-sm btn-warning">Düzenle</a>
+                    <a href="{{ url_for('kullanici_sil', username=kullanici.kurs_admin_username) }}"
+                        class="btn btn-sm btn-danger">Sil</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Öğrenciler Tablosu -->
+<br><br>
+<div class="table-responsive">
+    <h2>Öğrenciler</h2>
+    <small>
+       * öğrencinin rezervasyonu var ise silinmez önce rezervassyonu silmeniz gerekir
+    </small><br>
+    <a href="{{ url_for('ogrenci_ekle') }}" class="btn btn-primary">Öğrenci Ekle</a>
+    <br><br>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-light">
+            <tr>
+                <th>Öğrenci İsim</th>
+                <th>Öğrenci Soyisim</th>
+                <th>Telefon</th>
+                <th>E-posta</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ogrenci in ogrenciler %}
+            <tr>
+                <td>{{ ogrenci.ogrenci_isim }}</td>
+                <td>{{ ogrenci.ogrenci_soyisim }}</td>
+                <td>{{ ogrenci.ogrenci_telefon_no }}</td>
+                <td>{{ ogrenci.ogrenci_email }}</td>
+                <td>
+                    <div class="btn-group">
+                        <a href="{{ url_for('ogrenci_duzenle', ogrenci_id=ogrenci.ogrenci_id) }}"
+                            class="btn btn-sm btn-warning">Düzenle</a>
+                        <a href="{{ url_for('ogrenci_sil', ogrenci_id=ogrenci.ogrenci_id) }}"
+                            class="btn btn-sm btn-danger">Sil</a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="container">
+    <h2 class="my-3">Dekontlar</h2>
+    <table class="table table-striped">
+        <thead class="thead-light">
+            <tr>
+                <th>Dekont Adı</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for dekont in dekontlar %}
+                <tr>
+                    <td>{{ dekont }}</td>
+                    <td>
+                        <a href="{{ url_for('dekont_goster', filename=dekont) }}" class="btn btn-primary">Görüntüle</a>
+                        <a href="{{ url_for('dekont_indir', filename=dekont) }}" class="btn btn-success">İndir</a>
+                        <a href="{{ url_for('dekont_sil', filename=dekont) }}" class="btn btn-danger"
+                        onclick="return confirm('Bu dekontu silmek istediğinize emin misiniz?')">Sil</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+    // Filtreleme işlemini gerçekleştiren JavaScript kodu
+    document.getElementById('filterInput').addEventListener('keyup', function () {
+        const filterValue = this.value.toLowerCase();
+        const rows = document.querySelectorAll('tbody tr'); // Tablo satırlarını seçiyoruz
+
+        rows.forEach(row => {
+            const columns = row.querySelectorAll('td');
+            let matchFound = false;
+
+            columns.forEach(column => {
+                const columnValue = column.textContent.toLowerCase();
+                if (columnValue.includes(filterValue)) {
+                    matchFound = true;
+                }
+            });
+
+            if (matchFound) {
+                row.style.display = ''; // Eğer eşleşme varsa satırı görünür yap
+            } else {
+                row.style.display = 'none'; // Eğer eşleşme yoksa satırı gizle
+            }
+        });
+    });
+</script>
+<script>
+    // Filtreleme işlemini gerçekleştiren JavaScript kodu
+    document.getElementById('filterInput').addEventListener('keyup', function () {
+        const filterValue = this.value.toLowerCase();
+        const rows = document.querySelectorAll('tbody tr'); // Tablo satırlarını seçiyoruz
+
+        rows.forEach(row => {
+            const columns = row.querySelectorAll('td');
+            let matchFound = false;
+
+            columns.forEach(column => {
+                const columnValue = column.textContent.toLowerCase();
+                if (columnValue.includes(filterValue)) {
+                    matchFound = true;
+                }
+            });
+
+            if (matchFound) {
+                row.style.display = ''; // Eğer eşleşme varsa satırı görünür yap
+            } else {
+                row.style.display = 'none'; // Eğer eşleşme yoksa satırı gizle
+            }
+        });
+    });
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-3">Ödeme Sayfası</h2>
+    <div class="alert alert-primary" role="alert">
+        <h3 class="alert-heading">IBAN: TR72 0001 0023 4076 9952 3450 02</h3>
+        <p>Ad Soyad: Mert Metin Erdemli</p>
+    </div>
+    <form method="POST" action="{{ url_for('odeme', kurs_ilan_id=kurs_ilan_id) }}" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="ogrenci_bilgileri" class="form-label">Öğrenci İsim ve Soyisim:</label>
+            <input type="text" class="form-control" id="ogrenci_bilgileri" name="ogrenci_bilgileri" required>
+        </div>
+        <div class="mb-3">
+            <label for="dekont" class="form-label">Dekont Yükle:</label>
+            <input type="file" class="form-control" id="dekont" name="dekont" required accept=".pdf, .jpg, .jpeg, .png">
+        </div>
+        <button type="submit" class="btn btn-primary">Ödeme yapıldı</button>
+    </form>
+</div>
+{% endblock %}

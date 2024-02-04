@@ -1,0 +1,77 @@
+{% extends 'kullanici_layout.html' %}
+
+{% block content %}
+<style>
+    td.some-class {
+        max-width: 150px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    table {
+        font-size: 0.9rem;
+    }
+</style>
+<div class="table-responsive">
+    <h2 style="color: #2d0d96;">{{ username }} İlanları</h2>
+    <a href="{{ url_for('kullanici_kurs_ekle', username=username) }}" class="btn btn-primary">İlan Ekle</a>
+    
+    <br>
+    <br>
+    <h4 style="color: #2d0d96;">İlanlar</h4>
+    <table class="table table-striped table-bordered mt-2">
+        <thead>
+            <tr>
+                <th>Kurs Adı</th>
+                <th>Açıklama</th>
+                <th>Tarih</th>
+                <th>Kontenjan</th>
+                <th>Fiyat</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ilan in ilanlar %}
+            <tr>
+                <td>{{ ilan.kurs_adi }}</td>
+                <td>{{ ilan.kurs_aciklama }}</td>
+                <td>{{ ilan.kurs_tarih }}</td>
+                <td>{{ ilan.kurs_kontenjan }}</td>
+                <td>{{ ilan.kurs_fiyat }}</td>
+                <td>
+                    <a href="{{ url_for('kurs_duzenle', kurs_ilan_id=ilan.kurs_ilan_id) }}"
+                        class="btn btn-warning btn-sm">Düzenle</a>
+                    <a href="{{ url_for('kurs_sil', kurs_ilan_id=ilan.kurs_ilan_id) }}" class="btn btn-danger btn-sm"
+                        onclick="return confirm('Bu dersi silmek istediğinize emin misiniz?')">Sil</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h4 style="color: #2d0d96;">Rezervasyonlar</h4>
+    <table class="table table-striped table-bordered mt-2">
+        <thead>
+            <tr>
+                <th>Öğrenci İsim</th>
+                <th>Öğrenci Soyisim</th>
+                <th>Kurs Adı</th>
+                <th>Açıklama</th>
+                <th>Rezervasyon Tarih</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rezervasyon in rezervasyonlar %}
+            <tr>
+                <td>{{ rezervasyon.ogrenci_isim }}</td>
+                <td>{{ rezervasyon.ogrenci_soyisim }}</td>
+                <td>{{ rezervasyon.kurs_adi }}</td>
+                <td>{{ rezervasyon.kurs_aciklama }}</td>
+                <td>{{ rezervasyon.rezervasyon_tarih }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

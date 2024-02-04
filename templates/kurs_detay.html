@@ -1,0 +1,93 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Kurs Detayı</h2>
+        </div>
+        <div class="card-body">
+            <h2>{{ kurs.kurs_adi }}</h2>
+            <p>{{ kurs.kurs_aciklama }}</p>
+            <p>Kurs Veren Okul: {{ kurs.Kurs_veren_okul }}</p>
+            <p>Kurs Admin Kullanıcı Adı: {{ kurs.kurs_admin_username }}</p>
+            <p>Kurs Tarihi: {{ kurs.kurs_tarih }}</p>
+            <p>Kurs Kontenjanı: {{ kurs.kurs_kontenjan }}</p>
+            <p>Kurs Fiyatı: {{ kurs.kurs_fiyat }}</p>
+            
+            <form action="/rezervasyon/{{ kurs.kurs_ilan_id }}" method="POST">
+                <div class="form-group">
+                    <label for="ogrenci_isim">Öğrenci İsim:</label>
+                    <input type="text" class="form-control" id="ogrenci_isim" name="ogrenci_isim" required>
+                </div>
+                <div class="form-group">
+                    <label for="ogrenci_soyisim">Öğrenci Soyisim:</label>
+                    <input type="text" class="form-control" id="ogrenci_soyisim" name="ogrenci_soyisim" required>
+                </div>
+                <div class="form-group">
+                    <label for="ogrenci_telefon">Öğrenci Telefon:</label>
+                    <input type="text" class="form-control" id="ogrenci_telefon" name="ogrenci_telefon" pattern="0[0-9]{10}" required>
+                    <small>Örnek: 05551115555</small><br>
+                </div>
+                <div class="form-group">
+                    <label for="ogrenci_email">Öğrenci E-mail:</label>
+                    <input type="email" class="form-control" id="ogrenci_email" name="ogrenci_email" required>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Rezervasyon Yap</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        max-width: 400px;
+        margin: 50px auto;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+
+    .card-title {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+
+    .btn-primary:hover {
+        background-color: #0069d9;
+    }
+</style>
+{% endblock %}
