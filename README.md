@@ -1,6 +1,6 @@
-# Havacılık Kursları Web Uygulaması Raporu
+# Havacılık Kursları Web Uygulaması 
 
-**Mert Metin Erdemli**
+
 
 
 Bu depo, havacılık kurslarına yönelik geliştirilen web tabanlı uygulamayı tanıtmak, çalışma prensiplerini açıklamak ve kullanılan teknolojileri ve avantajları detaylı bir şekilde incelemek amacıyla oluşturulmuştur.
